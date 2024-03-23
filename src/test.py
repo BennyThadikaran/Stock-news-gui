@@ -15,41 +15,51 @@ class App(tk.Tk):
         s.configure("red.TFrame", background="red")
         s.configure("yellow.TFrame", background="yellow")
 
-        root_frm = ttk.Frame(self, padding="3 12")
-        root_frm.grid(column=0, row=0, sticky=tk.NSEW)
-        root_frm.columnconfigure(0, weight=1)
-        root_frm.rowconfigure(0, weight=1)
+        self.create_widgets()
 
-        tab1_frm = ttk.Frame(self)
-        tab1_frm.grid(column=0, row=0, sticky=tk.NSEW)
-        tab1_frm.columnconfigure(0, weight=2)
-        tab1_frm.columnconfigure(1, weight=1)
-        tab1_frm.rowconfigure(0, weight=1)
+    def create_widgets(self):
+        root_frame = ttk.Frame(self, padding="3 12")
+        root_frame.grid(column=0, row=0, sticky=tk.NSEW)
+        root_frame.columnconfigure(0, weight=1)
+        root_frame.rowconfigure(0, weight=1)
 
-        tab2_frm = ttk.Frame(self)
-        tab2_frm.grid(column=0, row=0, sticky=tk.NSEW)
-        tab2_frm.columnconfigure(0, weight=2)
-        tab2_frm.rowconfigure(0, weight=1)
-
-        tab = ttk.Notebook(root_frm)
+        tab = ttk.Notebook(root_frame)
 
         tab.grid(column=0, row=0, sticky=tk.NSEW)
 
-        blog_frm = ttk.Frame(tab1_frm, padding="12", style="red.TFrame")
-        blog_frm.grid(column=0, row=0, sticky=tk.NSEW)
+        tab.add(self.get_news_frame(), text="News")
+        tab.add(self.get_options_frame(), text="Configure")
 
-        side_frm = ttk.Frame(tab1_frm, padding="12", style="yellow.TFrame")
-        side_frm.grid(column=1, row=0, sticky=tk.NSEW)
+    def get_news_frame(self):
+        frame = ttk.Frame(self)
+        frame.grid(column=0, row=0, sticky=tk.NSEW)
+        frame.columnconfigure(0, weight=2)
+        frame.columnconfigure(1, weight=1)
+        frame.rowconfigure(0, weight=1)
 
-        opt_frm = ttk.Frame(tab2_frm, padding="3 12", style="yellow.TFrame")
+        main_frame = ttk.Frame(frame, padding="12", style="red.TFrame")
+        main_frame.grid(column=0, row=0, sticky=tk.NSEW)
+
+        side_frame = ttk.Frame(frame, padding="12", style="yellow.TFrame")
+        side_frame.grid(column=1, row=0, sticky=tk.NSEW)
+
+        ttk.Label(main_frame, text="Blog").grid(column=0, row=0, sticky=tk.W)
+        ttk.Label(side_frame, text="Side").grid(column=0, row=0, sticky=tk.W)
+
+        return frame
+
+    def get_options_frame(self):
+        frame = ttk.Frame(self)
+        frame.grid(column=0, row=0, sticky=tk.NSEW)
+        frame.columnconfigure(0, weight=2)
+        frame.rowconfigure(0, weight=1)
+
+        opt_frm = ttk.Frame(frame, padding="3 12", style="yellow.TFrame")
         opt_frm.grid(column=0, row=0, sticky=tk.NSEW)
 
-        ttk.Label(blog_frm, text="Blog").grid(column=0, row=0, sticky=tk.W)
-        ttk.Label(side_frm, text="Side").grid(column=0, row=0, sticky=tk.W)
         ttk.Label(opt_frm, text="Options").grid(column=0, row=0, sticky=tk.W)
 
-        tab.add(tab1_frm, text="Main")
-        tab.add(tab2_frm, text="Configure")
+        return frame
 
 
 app = App()
